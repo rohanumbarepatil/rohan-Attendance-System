@@ -18,7 +18,7 @@ export const attendanceService = {
     };
     
     // Create session via REST API
-    const sessionRes = await api.post('/api/api/attendance/sessions', sessionData);
+    const sessionRes = await api.post('/api/attendance/sessions', sessionData);
     const sessionKey = sessionRes.data.id || sessionRes.data;
     
     // Create records
@@ -36,7 +36,7 @@ export const attendanceService = {
       markedBy: facultyUserId,
       modificationHistory: [],
     }));
-    await api.post('/api/api/attendance/records', records);
+    await api.post('/api/attendance/records', records);
     return sessionKey;
   },
 
@@ -54,30 +54,30 @@ export const attendanceService = {
       lastModifiedBy: editorUid,
       modificationHistory: [...(record.modificationHistory || []), historyEntry],
     };
-    await api.put(`/api/attendance/records/${record.id}`, updatedRecord);
+    await api.put(`/attendance/records/${record.id}`, updatedRecord);
   },
 
   async unlockSession(sessionId) {
-    await api.put(`/api/attendance/sessions/${sessionId}/unlock`);
+    await api.put(`/attendance/sessions/${sessionId}/unlock`);
   },
 
   async getSessionsByFaculty(facultyUserId) {
-    const res = await api.get(`/api/attendance/sessions/faculty/${facultyUserId}`);
+    const res = await api.get(`/attendance/sessions/faculty/${facultyUserId}`);
     return res.data;
   },
 
   async getRecordsBySession(sessionId) {
-    const res = await api.get(`/api/attendance/sessions/${sessionId}/records`);
+    const res = await api.get(`/attendance/sessions/${sessionId}/records`);
     return res.data;
   },
 
   async getRecordsByStudentUser(studentUserId) {
-    const res = await api.get(`/api/attendance/student/${studentUserId}`);
+    const res = await api.get(`/attendance/student/${studentUserId}`);
     return res.data;
   },
 
   async getAllRecords() {
-    const res = await api.get(`/api/attendance/records`);
+    const res = await api.get(`/attendance/records`);
     return res.data;
   },
 
