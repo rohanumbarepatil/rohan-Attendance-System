@@ -2,7 +2,7 @@ import api from '../../services/api';
 
 export const authService = {
   async login(email, password) {
-    const res = await api.post('/auth/login', { email, password });
+    const res = await api.post('/api/auth/login', { email, password });
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
     
@@ -24,21 +24,21 @@ export const authService = {
   },
 
   async resetPassword(email) {
-    await api.post('/auth/reset-password', { email });
+    await api.post('/api/auth/reset-password', { email });
   },
 
   async verifyEmail() {
-    await api.post('/auth/verify-email');
+    await api.post('/api/auth/verify-email');
   },
 
   async fetchProfile(uid) {
-    const res = await api.get(`/users/${uid}`);
+    const res = await api.get(`/api/users/${uid}`);
     return res.data;
   },
 
   async touchLastLogin(uid) {
     try {
-      await api.put(`/users/${uid}/touch`);
+      await api.put(`/api/users/${uid}/touch`);
     } catch { /* non-critical */ }
   },
 
