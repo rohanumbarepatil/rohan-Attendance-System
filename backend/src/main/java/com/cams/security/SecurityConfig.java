@@ -31,8 +31,8 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
+      .cors(org.springframework.security.config.Customizer.withDefaults())
       .csrf(csrf -> csrf.disable())
-      .cors(cors -> cors.configurationSource(corsConfigurationSource()))
       .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(auth -> auth
         .requestMatchers("/api/auth/**", "/ws/**", "/swagger-ui/**", "/swagger-ui.html",
@@ -50,14 +50,33 @@ public class SecurityConfig {
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(Arrays.asList(corsOrigins.split(",")));
-    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    config.setAllowedHeaders(List.of("*"));
-    config.setAllowCredentials(true);
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
-    return source;
+
+      CorsConfiguration configuration = new CorsConfiguration();
+
+      configuration.setAllowedOrigins(List.of(
+          "http://localhost:5173",
+          "https://rohan-attendance-system-8llh.vercel.app"
+      ));
+
+      configuration.setAllowedMethods(List.of(
+          "GET",
+          "POST",
+          "PUT",
+          "PATCH",
+          "DELETE",
+          "OPTIONS"
+      ));
+
+      configuration.setAllowedHeaders(List.of("*"));
+
+      configuration.setAllowCredentials(true);
+
+      UrlBasedCorsConfigurationSource source =
+              new UrlBasedCorsConfigurationSource();
+
+      source.registerCorsConfiguration("/**", configuration);
+
+      return source;
   }
 
   @Bean

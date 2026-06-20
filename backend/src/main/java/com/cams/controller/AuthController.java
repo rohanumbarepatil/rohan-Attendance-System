@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@CrossOrigin(
+    origins = {
+        "http://localhost:5173",
+        "https://rohan-attendance-system-8llh.vercel.app"
+    }
+)
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
